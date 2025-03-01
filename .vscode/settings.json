@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "RockPaperScissor Game.sln"
+    "dotnet.defaultSolution": "W5-2D-RockPaperScissor-Game.sln"
 }
