@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -11,10 +12,10 @@ public class GameController : MonoBehaviour
     Text txtYou;        // the score you win
     Text txtCom;        // the score computer win
     Text txtResult;     // the result
-
+   
     int cntYou = 0;     // number you win
     int cntCom = 0;     // number computer win
-
+    SwitchScene switchScene; // instance or object of the class Swich Scene
 
     private void InitGame()
     {
@@ -24,14 +25,16 @@ public class GameController : MonoBehaviour
         txtYou = GameObject.Find("TxtYou").GetComponent<Text>();
         txtCom = GameObject.Find("TxtCom").GetComponent<Text>();
         txtResult = GameObject.Find("TxtResult_").GetComponent<Text>();
-
+      
         //init the text before the game start
         txtResult.text = "Select the button below";
     }
 
-    void Start(){
+    void Start()
+    {
         // init the game
         InitGame();
+        switchScene = GameObject.FindObjectOfType<SwitchScene>();
     }
 
     // Update is called once per frame
@@ -58,18 +61,31 @@ public class GameController : MonoBehaviour
 
         int comResult = UnityEngine.Random.Range(1, 4);
         int k = yourResult - comResult;
-        if (k == 0){
+        if (k == 0)
+        {
             txtResult.text = "Draw.";
         }
-        else if (k == 1 || k == -2){
+        else if (k == 1 || k == -2)
+        {
             cntYou++;
             txtResult.text = "You win.";
         }
-        else{
+        else
+        {
             cntCom++;
             txtResult.text = "Computer win.";
         }
         SetResult(yourResult, comResult);    // set game result to UI
+        GetFinalResult();
+    }
+  
+    void GetFinalResult(){
+        if (cntYou==5){
+            switchScene.LoadVictoryScene();
+        }
+        else if (cntCom==5){
+            switchScene.LoadGameOverScene();
+        }
     }
 
     void SetResult(int you, int com)
@@ -83,10 +99,11 @@ public class GameController : MonoBehaviour
         // winning score
         txtYou.text = cntYou.ToString();
         txtCom.text = cntCom.ToString();
-        }
-
+    }
+  
     // method to restart game, reset to start
-    public void onRestartGame(){
+    public void onRestartGame()
+    {
 
         cntYou = 0;
         cntCom = 0;

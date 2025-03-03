@@ -16,4 +16,10 @@ public class SwitchScene : MonoBehaviour
     {
         SceneManager.LoadScene("StartScene");
     }
+    public void LoadGameOverScene(){
+        SceneManager.LoadScene("GameoverScene");
+    }
+    public void LoadVictoryScene(){
+        SceneManager.LoadScene("VictoryScene");
+    }
 }
